@@ -1,22 +1,42 @@
 package neuralnetwork
 
+import vc "github.com/AnimemeMops/hackathonProject/internal/vector-calculator"
+
 type Network struct {
-	model Model
-}
-type Model struct {
-}
-
-func NewNetwork() *Network {
-	return &Network{}
-}
-func (n *Network) feed(data [][]float64, trainSample, epoch, butchSise int64) error {
-	return nil
+	model     *Model
+	data      []*vc.IV
+	age       int64
+	batchSize int64
 }
 
-func (n *Network) Evaluate(testSample [][]float64) (rating float64) {
+func NewNetwork(modelFile string, data []*vc.IV, age, batchSize int64) *Network {
+	newNet := &Network{
+		data:      data,
+		age:       age,
+		batchSize: batchSize,
+	}
+	if modelFile != "" {
+		newNet.model = NewModel(modelFile)
+		return newNet
+	}
+	newNet.feed()
+	return newNet
+}
+func (n *Network) feed() (string, error) {
+	return "", nil
+}
+
+func (n *Network) Evaluate(testSample []vc.IV) (rating float64) {
 	return
 }
 
-func (n *Network) Analysis(imgVector []float64) string {
+func (n *Network) Segment(imgVector []vc.IV) string {
 	return ""
+}
+
+type Model struct {
+}
+
+func NewModel(filePath string) *Model {
+	return &Model{}
 }
