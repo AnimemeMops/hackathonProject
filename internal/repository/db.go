@@ -72,7 +72,16 @@ func (rp *Repo) Vectors(ctx context.Context, tableName string, limit, offset uin
 	defer rows.Close()
 
 	var rowsData []*queryRow
+	for rows.Next() {
+		tmp := &queryRow{}
+		err = rows.Scan(&tmp.path, &tmp.vector)
+		if err != nil {
+			return nil, fmt.Errorf("scan: %w", err)
+		}
+		rowsData = append(rowsData, tmp)
+	}
 	err = rows.Scan(&rowsData)
+	rows.Next()
 	if err != nil {
 		return nil, fmt.Errorf("scan: %w", err)
 	}
