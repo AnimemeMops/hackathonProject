@@ -4,6 +4,10 @@ import (
 	"image"
 )
 
+const (
+	flot64_255 = float64(255)
+)
+
 func NewManager() *VC {
 	return &VC{}
 }
@@ -16,7 +20,12 @@ func (vc *VC) RGBAVector(img image.Image) []float64 {
     for y := 0; y < height; y++ {
         for x := 0; x < width; x++ {
 			r, g, b, a := img.At(x, y).RGBA()
-			rgba = append(rgba, float64(r),float64(g),float64(b),float64(a))
+			rgba = append(rgba, 
+				float64(r)/flot64_255,
+				float64(g)/flot64_255,
+				float64(b)/flot64_255,
+				float64(a)/flot64_255,
+			)
         }
     }
 	
